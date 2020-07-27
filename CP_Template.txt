@@ -1,5 +1,22 @@
-#include <bits/stdc++.h>
+/*--------------------------------------------------------
+  |	1. Get set bits of binary number
+  |	2. Factorial
+  | 3. Hexadecimal To Decimal
+  | 4. Factors
+  | 5. Power(X^Y)
+  | 6. Inverse(1/n)
+  | 7. Combination(nCr)
+  | 8. Multiply(Big integers)
+  | 9. Power(Big integers)
+  |10. Get all primes < N
+  |11. GCD
+  |12. Prime Factors of N
+  |13. No. of Factors
+---------------------------------------------------------*/
+	
 
+
+#include <bits/stdc++.h>
 using namespace std;
 
 class gfg {
