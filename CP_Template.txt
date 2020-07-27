@@ -1,6 +1,6 @@
 /*--------------------------------------------------------
-  |	1. Get set bits of binary number
-  |	2. Factorial
+  | 1. Get set bits of binary number
+  | 2. Factorial
   | 3. Hexadecimal To Decimal
   | 4. Factors
   | 5. Power(X^Y)
