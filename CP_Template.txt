@@ -1,0 +1,357 @@
+#include <bits/stdc++.h>
+
+using namespace std;
+
+class gfg {
+    /* Function to get no of set bits in binary
+representation of passed binary no. */
+public:
+    unsigned int countSetBits(int n)
+    {
+        unsigned int count = 0;
+        while (n) {
+            n &= (n - 1);
+            count++;
+        }
+        return count;
+    }
+}g;
+
+vector<long long >prime;
+
+#define MOD 1000000000+7
+#define ll long long int
+#define FOR(i,n) for(long long int i=0;i<(n);i++)
+#define NFOR(i,n) for(long long int i=n-1;i>=0;i--)
+#define asort(all,A) sort((A).begin(),(A).end())
+#define dsort(all,A,x) sort((A).begin(),(A).end(),greater<x>())
+#define pb(a) push_back((a))
+#define mk_pair(x,y,a,b) insert(pair<x,y >(a,b))
+#define autv(x) vector<x>::iterator
+#define autm(x,y) map<x,y>::iterator
+#define ini_v(n,x,A) FOR(i,n){ x a; cin>>a; A.pb(a) ;}
+#define ini_m(n,x,y,b,M) for(ll i=0;i!=n;i++){y a; cin>>a; M.mk_pair(x,y,b+i,a);}
+#define IFOR(i,x,y,M) for(autm(x,y) i=M.begin(); i!=M.end();i++)
+
+//map<ll,ll >m;
+//m.mk_pair(a,b,,c,d);
+//int binary_search(int a[],int l,int r,int x);
+ll fact(int n);
+int hexadecimalToDecimal(char hexVal[]);
+vector<vector<ll> > power(vector<vector<ll> >&a,ll n, ll p);
+ll fact(ll n, ll p);
+ll power(ll x, ll n, ll p);
+ll nCr(ll n, ll r, ll p);
+vector<vector<ll> > multiply(vector<vector<ll> > &a, vector<vector<ll> > &b, ll p);
+void manipulated_seive(ll N);
+int gcd(int a, int b);
+void generatePrimeFactors();
+ll calculateNoOFactors(ll n);
+
+
+
+
+void solve()
+{
+    ll n,min=MOD,sum=0;
+    cin>>n;
+    FOR(i,n)
+    {
+        ll a;
+        cin>>a;
+        sum+=a;
+        if(a<min)
+        min=a;
+    }
+    cout<<sum-n*min;
+}
+
+void template1 ()
+{
+    ll t;
+    cin>>t;
+    while(t--)
+    {
+        solve();
+        cout<<"\n";
+    }
+}
+int main()
+{
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    template1();
+    //solve();
+   // cout<<"\n";
+    return 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ll fact(int n)
+{
+    // single line to find factorial
+    return (n==1 || n==0) ? 1: n * fact(n - 1);
+}
+
+
+int hexadecimalToDecimal(char hexVal[])
+{
+    int len = strlen(hexVal);
+
+    // Initializing base value to 1, i.e 16^0
+    int base = 1;
+
+    int dec_val = 0;
+
+    // Extracting characters as digits from last character
+    for (int i=len-1; i>=0; i--)
+    {
+        // if character lies in '0'-'9', converting
+        // it to integral 0-9 by subtracting 48 from
+        // ASCII value.
+        if (hexVal[i]>='0' && hexVal[i]<='9')
+        {
+            dec_val += (hexVal[i] - 48)*base;
+
+            // incrementing base by power
+            base = base * 16;
+        }
+
+        // if character lies in 'A'-'F' , converting
+        // it to integral 10 - 15 by subtracting 55
+        // from ASCII value
+        else if (hexVal[i]>='A' && hexVal[i]<='F')
+        {
+            dec_val += (hexVal[i] - 55)*base;
+
+            // incrementing base by power
+            base = base*16;
+        }
+    }
+
+    return dec_val;
+}
+
+
+ll fact(ll n, ll p){
+	ll ans = 1;
+	for(ll i = 1; i <= n; i++){
+		ans *= i;
+		ans %= p;
+	}
+	return ans;
+}
+ll power(ll x, ll n, ll p)
+{
+	ll res = 1;
+	if(n == 1) return x%p;
+	if(n%2 == 1) res = x%p;
+
+	ll temp = power(x,n/2,p);
+	return res*((temp*temp)%p)%p;
+}
+ll inv(ll a, ll p)
+{
+	return power(a,p-2,p);
+}
+ll nCr(ll n, ll r, ll p)
+{
+	if(r > n) return 0;
+	ll t1 = fact(n,p);
+	ll t2 = inv(fact(r,p),p);
+	ll t3 = inv(fact(n-r,p),p);
+
+	return (((t1*t2)%p)*t3)%p;
+}
+vector<vector<ll> > multiply(vector<vector<ll> > &a, vector<vector<ll> > &b, ll p)
+{
+	int r1,c1,r2,c2;
+	r1 = a.size(); c1 = a[0].size();
+	r2 = b.size(); c2 = b[0].size();
+
+	vector<vector<ll> > result(r1,vector<ll>(c2,0));
+
+	if(c1 != r2) return result;
+
+	for(int i = 0; i < r1; i++){
+		for(int j = 0; j < c2; j++){
+			for(int k = 0; k < c1; k++){
+				result[i][j] += a[i][k]*b[k][j];
+				result[i][j] %= p;
+			}
+		}
+	}
+	return result;
+}
+
+vector<vector<ll> > power(vector<vector<ll> >&a,ll n, ll p)
+{
+	int r = a.size();
+	vector<vector<ll> > result(r,vector<ll>(r,0));
+	for(int i = 0; i < r; i++) result[i][i] = 1;
+
+	while(n > 0){
+		if(n%2 == 1){
+			result = multiply(result,a,p);
+		}
+		n /= 2;
+		a = multiply(a,a,p);
+	}
+	return result;
+}
+
+const long long MAX_SIZE = 1000001;
+
+// isPrime[] : isPrime[i] is true if number is prime
+// prime[] : stores all prime number less than N
+// SPF[] that store smallest prime factor of number
+// [for Exp : smallest prime factor of '8' and '16'
+// is '2' so we put SPF[8] = 2 , SPF[16] = 2 ]
+vector<long long >isprime(MAX_SIZE , true);
+
+vector<long long >SPF(MAX_SIZE);
+
+// function generate all prime number less then N in O(n)
+void manipulated_seive(ll N)
+{
+    // 0 and 1 are not prime
+    isprime[0] = isprime[1] = false ;
+
+    // Fill rest of the entries
+    for (long long int i=2; i<N ; i++)
+    {
+        // If isPrime[i] == True then i is
+        // prime number
+        if (isprime[i])
+        {
+            // put i into prime[] vector
+            prime.push_back(i);
+
+            // A prime number is its own smallest
+            // prime factor
+            SPF[i] = i;
+        }
+
+        // Remove all multiples of  i*prime[j] which are
+        // not prime by making isPrime[i*prime[j]] = false
+        // and put smallest prime factor of i*Prime[j] as prime[j]
+        // [ for exp :let  i = 5 , j = 0 , prime[j] = 2 [ i*prime[j] = 10 ]
+        // so smallest prime factor of '10' is '2' that is prime[j] ]
+        // this loop run only one time for number which are not prime
+        for (long long int j=0;
+             j < (int)prime.size() &&
+             i*prime[j] < N && prime[j] <= SPF[i];
+             j++)
+        {
+            isprime[i*prime[j]]=false;
+
+            // put smallest prime factor of i*prime[j]
+            SPF[i*prime[j]] = prime[j] ;
+        }
+    }
+}
+
+int gcd(int a, int b)
+{
+    if (b == 0)
+        return a;
+    return gcd(b, a % b);
+
+}
+
+
+const int MAX = 1000001;
+
+// array to store prime factors
+int factor[MAX] = { 0 };
+
+// function to generate all prime factors
+// of numbers from 1 to 10^6
+void generatePrimeFactors()
+{
+    factor[1] = 1;
+
+    // Initializes all the positions with their value.
+    for (int i = 2; i < MAX; i++)
+        factor[i] = i;
+
+    // Initializes all multiples of 2 with 2
+    for (int i = 4; i < MAX; i += 2)
+        factor[i] = 2;
+
+    // A modified version of Sieve of Eratosthenes to
+    // store the smallest prime factor that divides
+    // every number.
+    for (int i = 3; i * i < MAX; i++) {
+        // check if it has no prime factor.
+        if (factor[i] == i) {
+            // Initializes of j starting from i*i
+            for (int j = i * i; j < MAX; j += i) {
+                // if it has no prime factor before, then
+                // stores the smallest prime divisor
+                if (factor[j] == j)
+                    factor[j] = i;
+            }
+        }
+    }
+}
+
+// function to calculate number of factors
+ll calculateNoOFactors(ll n)
+{
+    if (n == 1)
+        return 1;
+
+    int ans = 1;
+
+    // stores the smallest prime number
+    // that divides n
+    int dup = factor[n];
+
+    // stores the count of number of times
+    // a prime number divides n.
+    int c = 1;
+
+    // reduces to the next number after prime
+    // factorization of n
+    int j = n / factor[n];
+
+    // false when prime factorization is done
+    while (j != 1) {
+        // if the same prime number is dividing n,
+        // then we increase the count
+        if (factor[j] == dup)
+            c += 1;
+
+        /* if its a new prime factor that is factorizing n,
+           then we again set c=1 and change dup to the new
+           prime factor, and apply the formula explained
+           above. */
+        else {
+            dup = factor[j];
+            ans = ans * (c + 1);
+            c = 1;
+        }
+
+        // prime factorizes a number
+        j = j / factor[j];
+    }
+
+    // for the last prime factor
+    ans = ans * (c + 1);
+
+    return ans;
+}
