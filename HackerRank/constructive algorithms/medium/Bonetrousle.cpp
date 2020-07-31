@@ -18,16 +18,16 @@ const ll mod = 1e9 + 7;
 
 
 vector<ll> grtsum(ll b, ll n, ll k){
-    ll _min,_max,lb=b;
+    ll x_min,lb=b;
 	vector<ll>v;
     ll quo,mod,i;
-    _min=(lb)*(lb+1)/2;
-    if(n < _min){
+    x_min=(lb)*(lb+1)/2;
+    if(n < x_min){
 		v.push_back(-1);
 		return v;
 	}
-    mod = (n - _min) % lb; 
-	quo = (n - _min)/lb;
+    mod = (n - x_min) % lb; 
+	quo = (n - x_min)/lb;
 	// cout<<mod<<" "<<quo;
     
     for(i=b;i>=1;i--) {
