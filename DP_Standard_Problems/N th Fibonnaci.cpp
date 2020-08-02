@@ -16,7 +16,7 @@ using namespace std;
 const ll dd = 3e5 + 7;
 const ll mod = 1e9 + 7;
 
-int fibo(ll n, ll *dp){  //(RECURSIVE)Top Down Dp + memoization => N th Fibonacci number
+int fibo(ll n, ll dp[]){  //Top Down Dp + memoization => N th Fibonacci number
 
 	if(n == 0 || n == 1){
 		dp[n] = n;
@@ -31,6 +31,18 @@ int FormulaFib(ll n) { //Formula for N th fibonacci number
     return round(pow(phi, n) / sqrt(5)); 
 } 
 
+int Fibon(ll n){ //(ITERATIVE)Bottom Up Dp + memoization => N th Fibonacci number
+	ll dp[n+1];
+
+	dp[0] = 0;
+	dp[1] = 1;
+
+	FOR(i,2,n){
+		dp[i] = dp[i-1] + dp[i-2];
+	}
+	FOR(i,0,n) cout<<dp[i];
+}
+
 
 void solve() {
 	
@@ -41,6 +53,9 @@ void solve() {
 	memset(dp, 0, sizeof(dp));
 
 	cout<<fibo(n, dp);
+	nl
+	FOR(i,0,n) cout<<dp[i];
+	Fibon(n);
 }
 
 int main(){
