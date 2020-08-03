@@ -16,6 +16,23 @@ using namespace std;
 const ll dd = 3e5 + 7;
 const ll mod = 1e9 + 7;
 
+int TotalCoins(ll n, ll coins[], ll amt){ //(ITERATIVE)Bottom Down Dp + memoization => Total unique Coin change Problem
+	ll dp[amt+1][n+1];
+
+	FOR(i,0,amt+1) dp[i][0] = 0;
+	FOR(i,0,n+1) dp[0][i] = 1;
+
+	FOR(i,1,amt+1){
+		FOR(j,1,n+1){
+			if(i < coins[j-1]){
+				dp[i][j] = dp[i][j-1];
+			}
+			else dp[i][j] = dp[i-coins[j-1]][j] + dp[i][j-1];
+		}
+	}
+	cout<<dp[amt][n];
+}
+
 int MinCoinsDP(ll n, ll coins[], ll amt, ll *dp){  //(RECURSIVE)Top Down Dp + memoization => Coins change Problem
 
 	if(amt == 0) return 0;
