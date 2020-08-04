@@ -31,7 +31,7 @@ int Ladder(ll n, ll *dp, ll k){  //(RECURSIVE => WINDOW SLIDING)Top Down Dp + me
 }
 
 
-int ladder(ll n, ll k){ //(ITERATIVE)Bottom Down Dp + memoization => Ladder Problem
+int ladder(ll n, ll k){ //(ITERATIVE)Bottom Up Dp + memoization => Ladder Problem
 	ll dp[n+1];
 
 	dp[0] = 1;
