@@ -54,6 +54,22 @@ int LCS_DP(char *x, ll n, char *y, ll k){ //(ITERATIVE)Bottom Up Dp + memoizatio
 		}
 	}
 	cout<<dp[n][k];
+	nl
+	ll val = dp[n][k];
+	
+	ll ans[val+1];
+
+	ll i = n, j = k;
+	while (i > 0 and j > 0){
+		if(x[i-1] == y[j-1]){
+			ans[val] = x[i-1];
+			val--, i--, j--; 
+		}
+		else if(dp[i-1][j] > dp[i][j-1]) i--;
+		else j--;
+	}
+
+	FOR(i,1,dp[n][k]+1) cout<<ans[i]<<" ";
 }
 
 
