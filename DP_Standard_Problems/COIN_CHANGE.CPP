@@ -16,7 +16,7 @@ using namespace std;
 const ll dd = 3e5 + 7;
 const ll mod = 1e9 + 7;
 
-int TotalCoins(ll n, ll coins[], ll amt){ //***2D-DP***(ITERATIVE)Bottom Down Dp + memoization => Total unique Coin change Problem
+int TotalCoins(ll n, ll coins[], ll amt){ //***2D-DP***(ITERATIVE)Bottom up Dp + memoization => Total unique Coin change Problem
 	ll dp[amt+1][n+1];
 
 	FOR(i,0,amt+1) dp[i][0] = 0;
@@ -68,7 +68,7 @@ int minCoins(ll n, ll coins[], ll amt){ //Recursive without DP
 	return minAns;
 }
 
-int minCoinsDP(ll n, ll coins[], ll amt){ //(ITERATIVE)Bottom Down Dp + memoization => Coin change Problem
+int minCoinsDP(ll n, ll coins[], ll amt){ //(ITERATIVE)Bottom up Dp + memoization => Coin change Problem
 	ll dp[amt];
 	memset(dp, 0, sizeof(dp));
 	
