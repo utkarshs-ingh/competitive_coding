@@ -68,6 +68,21 @@ int LIS(ll n, ll a[]){ //(ITERATIVE)Bottom up Dp + memoization => Longest incr. 
 	cout<<*max_element(dp, dp+n);
 }
 
+void LIS(ll n, ll a[]){ //Nlogn approach for LIS....(binary search + DP)
+	
+    vector<ll>v;
+    v.push_back(a[0]);
+
+    FOR(i,1,n){
+        if(v.back() < a[i]) v.push_back(a[i]);
+        else{
+            ll index = lower_bound(v.begin(), v.end(), a[i]) - v.begin(); //BINARY search alternative => LOWER_BOUND()
+            v[index] = a[i];
+        }
+    }
+    
+    cout<<v.size();
+}
 
 void solve() {
 	ll n;
