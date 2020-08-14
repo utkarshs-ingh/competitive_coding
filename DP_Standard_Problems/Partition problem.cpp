@@ -1,3 +1,5 @@
+/* 6, 12, 16, 25, 29, *30, 38, 34, 46, 47, 50, 51*/
+
 #include <bits/stdc++.h> 
 using namespace std; 
 
@@ -30,21 +32,42 @@ bool EP_REC(ll n, ll a[], ll sum){ //RECURSIVE no DP =>Equal sum Partition probl
 
 void EP_DP(ll n, ll a[], ll sum){ //(ITERATIVE)Bottom Up Dp =>Equal sum Partition problem
 
-	bool dp[sum+1][n+1];
+	bool dp[n+1][sum+1];
 	
-	FOR(i,0,n+1) dp[0][i] = true;
-	FOR(i,0,sum+1) dp[i][0] = false;
+	FOR(i,0,sum+1) dp[0][i] = false;
+	FOR(i,0,n+1) dp[i][0] = true;
+	
+	FOR(i,1,n+1){
+		FOR(j,1,sum+1){
+			dp[i][j] = dp[i-1][j];
 
-	FOR(i,1,sum+1){
-		FOR(j,1,n+1){
-			dp[i][j] = dp[i][j-1];
-			if(i >= a[j - 1]){
-				dp[i][j] = dp[i][j] or dp[i - a[j - 1]][j - 1];
+			if(j >= a[i-1]){
+				dp[i][j] = dp[i][j] or dp[i - 1][j - a[i - 1]];
 			}
 		}
 	}
 
-	cout<<dp[sum][n];
+	cout<<dp[n][sum]; nl
+	// Printing the numbers in the subsets 
+	vector<ll> v1, v2;
+	ll i = n;
+	ll j = sum;
+
+	while (i > 0 && j >= 0) { 
+        if (dp[i - 1][j]) { 
+            i--; 
+            v1.push_back(a[i]); 
+        } 
+        else if (dp[i - 1][j - a[i - 1]]) { 
+            i--; 
+            j -= a[i]; 
+            v2.push_back(a[i]); 
+        } 
+    } 
+
+	ITER(i,v1) cout<<*i<<" "; nl
+	ITER(i,v2) cout<<*i<<" ";
+
 }
 
 
