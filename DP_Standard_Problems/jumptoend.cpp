@@ -50,6 +50,28 @@ int jump_DP(ll n, ll a[]){ //(ITERATIVE)Bottom Up Dp => min jumps to reach end
 	cout<<dp[n-1];
 }
 
+int jump_to_end(ll n, ll a[]){ //min jumps to reach end in O(n) with O(1) space
+	
+	ll max_reach =  a[0];
+	ll steps = a[0];
+	ll jumps = 1;
+	
+	FOR(i,1,n){
+		if(i == n-1) break;
+		max_reach = max(max_reach, i + a[i]);
+		steps--;
+		if(steps == 0){
+			if(i >= max_reach){
+				jumps = -1;
+				break;
+			}
+			jumps++;
+			steps = max_reach - i;
+		}
+	}
+	cout<<jump;nl
+}
+
 
 void solve() {
 	ll n;
@@ -57,7 +79,8 @@ void solve() {
 
 	ll a[n];
 	FOR(i,0,n) cin>>a[i];
-
+	
+	jump_to_end(n, a);
 	jump_DP(n, a); nl 
 	ll ans = jump(n, a);
 	if(ans == INT_MAX) ans = -1;
