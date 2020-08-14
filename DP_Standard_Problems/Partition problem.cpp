@@ -1,5 +1,3 @@
-/* 6, 12, 16, 25, 29, *30, 38, 34, 46, 47, 50, 51*/
-
 #include <bits/stdc++.h> 
 using namespace std; 
 
