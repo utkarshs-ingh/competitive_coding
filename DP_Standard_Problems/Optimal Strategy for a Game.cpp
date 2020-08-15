@@ -27,7 +27,7 @@ ll OP_REC(ll *a, ll l, ll r){ // RECURSIVE (no DP): optimal game strategy
 	return max(res1, res2);
 }
 
-ll OP_DP(ll *a, ll l, ll r, ll sum, ll **dp){ //RECURSIVE DP (w memoization): optimal game strategy 
+ll OP_DP(ll *a, ll l, ll r, ll sum, ll dp[100][100]){ //RECURSIVE DP (w memoization): optimal game strategy 
 
 	if(l > r) return 0;
 	if(l == r - 1) return max(a[l], a[r]);
@@ -42,8 +42,6 @@ ll OP_DP(ll *a, ll l, ll r, ll sum, ll **dp){ //RECURSIVE DP (w memoization): op
 
 }
 
-
-
 void solve() {
 	ll n;
     cin>>n;
@@ -55,11 +53,11 @@ void solve() {
 	ll sum = 0; 
 	
 	sum = accumulate(a, a + n, sum);
-	ll **dp = new ll *[sum];
-	FOR(i, 0, sum) dp[i] = new ll[sum];
+
+	ll dp[100][100];
 	
-	FOR(i, 0, sum)
-		FOR(j, 0, sum)
+	FOR(i, 0, 100)
+		FOR(j, 0, 100)
 			dp[i][j] = -1;
 
 	cout << OP_DP(a, 0, n-1, sum, dp); nl
