@@ -1,3 +1,6 @@
+/* use hash maps to further optimize the code: refer -> https://www.geeksforgeeks.org/palindrome-partitioning-dp-17/ */
+
+
 #include <bits/stdc++.h> 
 using namespace std; 
 
