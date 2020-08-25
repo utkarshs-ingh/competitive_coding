@@ -29,11 +29,11 @@ int LCS(char *x, ll n, char *y, ll k){ //Recursive without DP
 
 int LCS_DP(char *x, ll n, char *y, ll k, ll dp[101][101]){ //Recursive Top down DP with memoization
 
-	if(n < 0 || k < 0) return 0;
+	if(n <= 0 || k <= 0) return 0;
 	if(dp[n][k] != -1) return dp[n][k];
 	
 	ll res;
-	if(x[n] == y[k]) res = 1 + LCS_DP(x, n-1, y, k-1, dp);
+	if(x[n-1] == y[k-1]) res = 1 + LCS_DP(x, n-1, y, k-1, dp);
 	else res = max(LCS_DP(x, n, y, k-1, dp), LCS_DP(x, n-1, y, k, dp)); 
 
 	dp[n][k] = res;
