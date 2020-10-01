@@ -2,7 +2,7 @@
 using namespace std; 
 
 
-#define ll  long long
+
 #define pi pair<ll,ll>p
 #define MOD 1000000000+7
 #define FOR(i,a,n) for(ll i=a;i<(n);i++)
@@ -12,19 +12,20 @@ using namespace std;
 #define IOP freopen("input.txt", "r", stdin); freopen("output.txt", "w", stdout);
 #define FIO ios_base::sync_with_stdio(false); cin.tie(NULL);
 #define ITER(i, a) for(auto i = a.begin(); i != a.end(); i++)
+#define int long long
 /* ----------------------------------------------------------------------------------------------------*/
 
 
 void solve() {
 
-    ll n, k, flag = 0;
+    int n, k, flag = 0;
     cin >> n >> k;
 
-	vector<ll>v;
-	map<ll,ll>m;
+	vector<int>v;
+	map<int,int>m;
 
 	FOR(i,0,n){
-		ll a;
+		int a;
 		cin>>a;
 		m[a]++;
 	}
