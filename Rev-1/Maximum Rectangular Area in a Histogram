@@ -20,6 +20,9 @@ const ll mod = 1e9 + 7;
 
 /* ----------------------------------------------------------------------------------------------------*/
 
+// similar code for Nearest Greater element to left/right and Max Area Histogram
+
+
 void NSL(ll a[], ll n, vector<ll> &lt) {
     stack<pi>s;
     s.push(make_pair(a[0], 0));
