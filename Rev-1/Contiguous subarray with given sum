@@ -25,10 +25,19 @@ void solve() {
     ll n, k;
     cin >> n >> k;
 
-    ll a[n];
-    FOR(i, 0, n) cin >> a[i];
+    ll a[n], prefixSum = 0, ans = 0;
+    map<ll ,ll>mp;
 
-    
+    FOR(i, 0, n) {
+        cin >> a[i];
+        prefixSum += a[i];
+        if(prefixSum == k) ans++;
+        if(mp.find(prefixSum - k) != mp.end()) ans += mp[prefixSum - k];
+        mp[prefixSum]++;
+    }
+
+    cout << ans;
+    nl
 
 }
 
