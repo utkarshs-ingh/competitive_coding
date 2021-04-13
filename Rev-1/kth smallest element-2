@@ -2,7 +2,7 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-// using Quicksort Algorithm: Average case O(n) and Space O(1)
+// using Quick select Algorithm: Average case O(n) and Space O(1)
 int kthSmallest(int *, int, int, int);
  
 int main()
