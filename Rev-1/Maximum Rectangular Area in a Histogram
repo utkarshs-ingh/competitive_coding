@@ -20,12 +20,29 @@ const ll mod = 1e9 + 7;
 
 /* ----------------------------------------------------------------------------------------------------*/
 
-void NSL(ll a[], ll n) {
-
+void NSL(ll a[], ll n, vector<ll> &lt) {
+    stack<pi>s;
+    s.push(make_pair(a[0], 0));
+    lt.push_back(-1);
+    FOR(i, 1, n) {
+        while(!s.empty() and s.top().first >= a[i]) s.pop();
+        if(s.empty()) lt.push_back(-1);
+        else lt.push_back(s.top().second);
+        s.push(make_pair(a[i], i));
+    }
 }
 
-void NSR(ll a[], ll n) {
-    
+void NSR(ll a[], ll n, vector<ll> &rt) {
+    stack<pi>s;
+    s.push(make_pair(a[n-1], n-1));
+    rt.push_back(n);
+    NFOR(i, n-1, 0) {
+        while(!s.empty() and s.top().first >= a[i]) s.pop();
+        if(s.empty()) rt.push_back(n);
+        else rt.push_back(s.top().second);
+        s.push(make_pair(a[i], i));
+    }
+    reverse(rt.begin(), rt.end());
 }
 
 void solve() {
@@ -33,16 +50,16 @@ void solve() {
     ll n;
     cin >> n;
 
-    ll a[n];
+    ll a[n], ans = 0;
     FOR(i, 0, n) cin >> a[i];
 
-    ll ans[n] = {0}, res = 0;
-    NSR(ans, n);
-    NSL(ans, n);
+    vector<ll> lt, rt;
+    NSR(a, n, rt);
+    NSL(a, n, lt);
 
-    FOR(i, 0, n) res = max(res, ans[i]*a[i]);
+    FOR(i, 0, n) ans = max(ans, a[i]*(rt[i] - lt[i] - 1));
 
-    cout << res; nl
+    cout << ans; nl
 
 }
 
