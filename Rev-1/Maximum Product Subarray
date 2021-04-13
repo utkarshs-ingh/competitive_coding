@@ -28,11 +28,13 @@ void solve() {
     ll a[n];
     FOR(i, 0, n) cin >> a[i];
 
+//  wont work for cases [0, 0, -20, 0] or [0, -2, 0, 0, -20]: array with only 0 & -ve. Handle separately
     ll minp = a[0], maxp = a[0], ans = a[0];
-    FOR(i, 1, n) {
-        if(a[i] < 0) swap(maxp, minp);
-        minp = min(a[i]*minp, a[i]);
-        maxp = max(a[i]*maxp, a[i]);
+    FOR(i, 1, n) {  
+        if(a[i] == 0) maxp = 1, minp = 1;
+        ll temp = maxp;
+        maxp = max(max(a[i]*maxp, a[i]*minp), a[i]);
+        minp = min(min(a[i]*temp, a[i]*minp), a[i]);
         ans = max(ans, maxp);
     }
     cout << ans;
