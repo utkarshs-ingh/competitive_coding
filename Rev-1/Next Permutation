@@ -1,0 +1,57 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+class Solution{
+public:
+    vector<int> nextPermutation(int n, vector<int> nums){
+        int k = 0;
+        int l = n;
+        int ck = 0;
+        for(int i = 0; i < n-1; i++) 
+            if(nums[i] < nums[i+1]) {
+              k = i;
+              ck = 1;  
+            }
+        
+        for(int i = k; i < nums.size(); i++) 
+            if(nums[k] < nums[i]) 
+              l = i;
+        
+       
+       int right = (n - 1 - k)/2;
+       int i = 0;
+       
+       if(ck != 0) {
+           swap(nums[l], nums[k]);
+           k += 1;
+       }
+       
+       while(right--) {
+           swap(nums[k + i], nums[n - i - 1]);
+           i++;
+       }
+       
+       return nums;
+    }
+};
+
+
+
+int main(){
+    int t;
+    cin>>t;
+    while(t--){
+        int N;
+        cin>>N;
+        vector<int> arr(N);
+        for(int i = 0;i < N;i++)
+            cin>>arr[i];
+        
+        Solution ob;
+        vector<int> ans = ob.nextPermutation(N, arr);
+        for(int u: ans)
+            cout<<u<<" ";
+        cout<<"\n";
+    }
+    return 0;
+}  
