@@ -1,0 +1,63 @@
+#include <bits/stdc++.h> 
+using namespace std; 
+
+#define ll  long long
+#define pi pair<ll, ll> 
+#define maxheap(dt) priority_queue<dt>
+#define minheap(dt) priority_queue<dt, vector<dt>, greater<dt>>
+#define nl cout << "\n";
+#define ITER(i, a) for(auto i = a.begin(); i != a.end(); i++)
+#define FOR(i, a, n) for(ll i = a; i < (n); i++)
+#define NFOR(i, n, a) for(ll i = n-1; i >= a; i--)
+#define NITER(i, a) for(auto i = a.end(); i != a.begin(); i--)
+#define all(v) (v).begin(), (v).end()
+#define twhile ll t; cin >> t; while(t--)
+#define IOP freopen("test.txt", "r", stdin); freopen("output.txt", "w", stdout);
+#define FIO ios_base::sync_with_stdio(false); cin.tie(NULL);
+
+const ll dd = 3e5 + 7;
+const ll mod = 1e9 + 7;  
+
+/* ----------------------------------------------------------------------------------------------------*/
+
+// Kadane’s Algorithm
+void solve() {
+    
+    ll n;
+    cin >> n;
+    ll a[n];
+    FOR(i, 0, n) cin >> a[i];
+
+    ll sum = 0, maxSum = INT_MIN;
+    FOR(i, 0, n) {
+        sum += a[i];
+        maxSum = max(maxSum, sum);
+        if(sum < 0) sum = 0;
+    }   
+
+    cout << maxSum;
+    nl
+
+}
+
+
+/*-----------------------------------------------------------------------------------------------------*/
+
+int main(){
+
+    FIO
+    IOP
+    twhile 
+        solve();
+    return 0;
+}
+
+
+/*
+1
+8
+-2 -3 4 -1 -2 1 5 -3
+
+7
+*/
+
