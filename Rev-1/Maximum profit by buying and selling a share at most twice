@@ -1,0 +1,70 @@
+#include <bits/stdc++.h> 
+using namespace std; 
+
+#define ll  long long
+#define pi pair<ll, ll> 
+#define maxheap(dt) priority_queue<dt>
+#define minheap(dt) priority_queue<dt, vector<dt>, greater<dt>>
+#define nl cout << "\n";
+#define ITER(i, a) for(auto i = a.begin(); i != a.end(); i++)
+#define FOR(i, a, n) for(ll i = a; i < (n); i++)
+#define NFOR(i, n, a) for(ll i = n-1; i >= a; i--)
+#define NITER(i, a) for(auto i = a.end(); i != a.begin(); i--)
+#define all(v) (v).begin(), (v).end()
+#define twhile ll t; cin >> t; while(t--)
+#define IOP freopen("test.txt", "r", stdin); freopen("output.txt", "w", stdout);
+#define FIO ios_base::sync_with_stdio(false); cin.tie(NULL);
+
+const ll dd = 3e5 + 7;
+const ll mod = 1e9 + 7;  
+
+/* ----------------------------------------------------------------------------------------------------*/
+
+void solve() {
+
+    ll n;
+    cin >> n;
+
+    ll a[n], profit[n] = {0};
+    FOR(i, 0, n) cin >> a[i];
+
+    // finding maxprofit for one transaction from Right
+    ll maxR = a[n-1];
+    NFOR(i, n-1, 0) {
+        maxR = max(a[i], maxR);
+        profit[i] = max(profit[i+1], maxR - a[i]);
+    }
+
+    // find profit on the accumulated profit done by one transaction from right: making 2nd transaction
+    ll minL = a[0];
+    FOR(i, 1, n) {
+        minL = min(minL, a[i]);
+        profit[i] = max(profit[i - 1], profit[i] + (a[i] - minL));
+    }
+
+    cout << profit[n-1];
+    nl
+
+}
+
+
+/*-----------------------------------------------------------------------------------------------------*/
+
+int main(){
+
+    FIO
+    IOP
+    twhile 
+        solve();
+    return 0;
+}
+
+
+/*
+1
+10
+2 30 15 10 8 25 80 11 30 100
+
+167
+*/
+
