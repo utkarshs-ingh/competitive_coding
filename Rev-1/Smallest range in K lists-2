@@ -1,0 +1,59 @@
+#include<iostream>
+#include<limits.h>
+#include<queue>
+using namespace std;
+#define N 1000
+
+pair<int,int> findSmallestRange(int arr[][N], int n, int k);
+
+int main()
+{
+    int t;
+    cin>>t;
+    while(t--)
+    {
+        int n, k;
+        cin>>n>>k;
+        int arr[N][N];
+        pair<int,int> rangee;
+        for(int i=0; i<k; i++)
+            for(int j=0; j<n; j++)
+                cin>>arr[i][j];
+	    rangee = findSmallestRange(arr, n, k);
+	    cout<<rangee.first<<" "<<rangee.second<<"\n";
+    }   
+	return 0;
+}
+
+
+
+pair<int,int> findSmallestRange(int arr[][N], int n, int k)
+{
+    priority_queue<pair<int, pair<int, int>>, vector<pair<int, pair<int, int>>>, greater<pair<int, pair<int, int>>>> minHeap;
+    int maxElement = INT_MIN;
+    for(int i = 0; i < k; i++)
+    {
+        minHeap.push({arr[i][0], {i, 0}});
+        maxElement = max(maxElement, arr[i][0]);
+    }
+    int start = 0, end = INT_MAX;
+    while(minHeap.size() == k)
+    {
+        auto temp = minHeap.top();
+        minHeap.pop();
+        int topElement = temp.first;
+        if(maxElement - topElement < end - start)
+        {
+            start = topElement;
+            end = maxElement;
+        }
+        int source = temp.second.first;
+        int index = temp.second.second;
+        if(index < n-1)
+        {
+            minHeap.push({arr[source][index+1], {source, index+1}});
+            maxElement = max(maxElement, arr[source][index+1]);
+        }
+    }
+    return make_pair(start, end);
+}
