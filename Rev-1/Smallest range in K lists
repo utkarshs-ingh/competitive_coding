@@ -1,0 +1,63 @@
+#include<bits/stdc++.h>
+#include<limits.h>
+using namespace std;
+#define N 1000
+
+pair<int,int> findSmallestRange(int arr[][N], int n, int k);
+
+int main()
+{
+    int t;
+    cin>>t;
+    while(t--)
+    {
+        int n, k;
+        cin>>n>>k;
+        int arr[N][N];
+        pair<int,int> rangee;
+        for(int i=0; i<k; i++)
+            for(int j=0; j<n; j++)
+                cin>>arr[i][j];
+	    rangee = findSmallestRange(arr, n, k);
+	    cout<<rangee.first<<" "<<rangee.second<<"\n";
+    }   
+	return 0;
+}
+
+pair<int,int> findSmallestRange(int a[][N], int n, int k)
+{
+     vector<pair<int,int>>v;
+     for(int i = 0; i < k; i++) {
+         for(int j = 0; j < n; j++) {
+            v.push_back({a[i][j], i+1});
+         }
+     }
+     sort(v.begin(), v.end());
+     map<int, int>m;
+     pair<int, int>ans;
+     int total = 0;
+     auto j = v.begin();
+     int dist = INT_MAX;
+     for(auto i = v.begin(); i != v.end(); i++) {
+        //  cout << i->first << " " << i->second << endl;
+        m[i->second]++;
+        if(m[i->second] == 1) total++;
+        if(total == k and dist > i->first - j->first + 1) {
+            dist = i->first - j->first + 1;
+            ans = {j->first, i->first};
+            // cout << ans.first << " " << ans.second << endl;
+        }
+        
+        if(total == k) {
+            while(true) {
+                if(m[j->second] > 1) m[j->second]--, j++;
+                else break;
+            }
+            if(dist > i->first - j->first + 1) {
+                dist = i->first - j->first + 1;
+                ans = {j->first, i->first};
+            }
+        }
+     }
+    return ans;
+}
