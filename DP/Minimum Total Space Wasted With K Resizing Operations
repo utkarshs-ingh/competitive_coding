@@ -1,0 +1,34 @@
+/*
+You are currently designing a dynamic array. You are given a 0-indexed integer array nums, where nums[i] is the number of elements that will be in the array at time i. In addition, you are given an integer k, the maximum number of times you can resize the array (to any size).
+
+The size of the array at time t, sizet, must be at least nums[t] because there needs to be enough space in the array to hold all the elements. The space wasted at time t is defined as sizet - nums[t], and the total space wasted is the sum of the space wasted across every time t where 0 <= t < nums.length.
+
+Return the minimum total space wasted if you can resize the array at most k times.
+
+Note: The array can have any size at the start and does not count towards the number of resizing operations.
+
+*/
+
+class Solution {
+public:
+    int n, INF = 200 * 1e6;
+    int memo[200][200] = {};
+    int minSpaceWastedKResizing(vector<int> &nums, int k) {
+        memset(memo, -1, sizeof(memo));
+        n = nums.size();
+        return dp(nums, 0, k);
+    }
+    int dp(vector<int> &nums, int i, int k) {
+        if (i == n) return 0;
+        if (k == -1) return INF;
+        if (memo[i][k] != -1) return memo[i][k];
+        int ans = INF, maxNum = nums[i], totalSum = 0;
+        for (int j = i; j < n; ++j) {
+            maxNum = max(maxNum, nums[j]);
+            totalSum += nums[j];
+            int wasted = maxNum * (j - i + 1) - totalSum;
+            ans = min(ans, dp(nums, j + 1, k - 1) + wasted);
+        }
+        return memo[i][k] = ans;
+    }
+};
