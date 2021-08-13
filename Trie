@@ -1,0 +1,134 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+#define ALPHABET_SIZE (26)
+#define CHAR_TO_INDEX(c) ((int)c - (int)'a')
+
+// trie node
+struct TrieNode {
+    struct TrieNode *children[ALPHABET_SIZE];
+    bool isLeaf;
+};
+
+// Returns new trie node (initialized to NULLs)
+struct TrieNode *getNode(void) {
+    struct TrieNode *pNode = NULL;
+
+    pNode = (struct TrieNode *) malloc(sizeof(struct TrieNode));
+
+    if (pNode) {
+        int i;
+
+        pNode->isLeaf = false;
+
+        for (i = 0; i < ALPHABET_SIZE; i++) pNode->children[i] = NULL;
+    }
+
+    return pNode;
+}
+
+void insert(struct TrieNode *, string);
+
+bool search(struct TrieNode *, string);
+
+// Driver
+int main() {
+    // freopen("input.txt", "r", stdin);
+    // freopen("output.txt", "w", stdout);
+    int t;
+    cin >> t;
+    while (t--) {
+        int n;
+        cin >> n;
+        string keys[n];
+
+        for (int i = 0; i < n; i++) {
+            cin >> keys[i];
+        }
+
+        struct TrieNode *root = getNode();
+        // Construct trie
+        for (int i = 0; i < n; i++) insert(root, keys[i]);
+
+        string abc;
+
+        cin >> abc;
+        // Search for different keys
+
+        if (search(root, abc))
+            cout << "1\n";
+        else
+            cout << "0\n";
+        // char ex;
+        // cin >> ex;
+        // cout << ex << "\n";
+    }
+    return 0;
+}
+
+
+//Function to insert string into TRIE.
+void insert(struct TrieNode *root, string key)
+{
+    struct TrieNode *crawl = root;
+    for(int i = 0; i < key.length(); i++) {
+        int idx = key[i] - 'a';
+        if(crawl->children[idx] == NULL) {
+            crawl->children[idx] = getNode();
+        }
+        crawl = crawl->children[idx];
+    }
+    crawl->isLeaf = true;
+}
+
+//Function to use TRIE data structure and search the given string.
+bool search(struct TrieNode *root, string key) 
+{
+    struct TrieNode *crawl = root;
+    for(int i = 0; i < key.length(); i++) {
+        int idx = key[i] - 'a';
+        if(crawl->children[idx] == NULL) return false;
+        crawl = crawl->children[idx];
+    }
+    return crawl->isLeaf;
+}
+
+bool isEmpty(trie_node_t* root) {
+    for (int i = 0; i < ALPHABET_SIZE; i++)
+        if (root->children[i])
+            return false;
+    return true;
+}
+ 
+
+trie_node_t* del(trie_node_t* root, string key, int depth = 0)
+{
+    
+    if (!root)
+        return NULL;
+ 
+    if (depth == key.size()) {
+ 
+        if (root->value)
+            root->value = false;
+ 
+        
+        if (isEmpty(root)) {
+            delete (root);
+            root = NULL;
+        }
+ 
+        return root;
+    }
+ 
+    
+    int index = key[depth] - 'a';
+    root->children[index] = del(root->children[index], key, depth + 1);
+ 
+    if (isEmpty(root) && root->value == false) {
+        delete (root);
+        root = NULL;
+    }
+ 
+    return root;
+}
