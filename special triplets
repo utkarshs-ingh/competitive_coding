@@ -1,0 +1,32 @@
+#include<bits/stdc++.h>
+#include<cmath>
+using namespace std;
+
+#define ll  long long
+#define IOP freopen("input.txt", "r", stdin); freopen("output.txt", "w", stdout);
+#define FIO ios_base::sync_with_stdio(false); cin.tie(NULL);
+#define twhile ll t; cin >> t; while(t--)
+
+int solve() {
+	int n;
+	int d=0;
+	cin >> n ;
+	for(int c=1;c<=n;c++){
+		for(int b=c;b<=n;b=b+c){
+			for(int a=c;a<=n;a=a+b){
+				if(a%b==c && b%c==0){
+                d++;
+				}
+			}
+		}
+	}
+	return d;
+}
+int main(){
+		FIO
+	//	IOP
+		twhile
+			cout << solve() << endl;
+
+		return 0;
+	}
